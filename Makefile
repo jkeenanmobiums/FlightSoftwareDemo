@@ -6,7 +6,10 @@ C_COMPILE = $(CC) $(CFLAGS) -c
 C_LINK = $(CC) $(CFLAGS)
 
 .PHONY: all
-all: build/thread build/timer
+all: build build/thread build/timer
+
+build:
+	mkdir build
 
 build/timer: timer/main.c
 	$(C_LINK) timer/main.c -o build/timer
