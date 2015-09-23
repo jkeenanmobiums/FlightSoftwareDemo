@@ -5,6 +5,7 @@
 
 int Thread_1_Counter;
 int Thread_2_Counter;
+int checker;
 
 void * thread_func_1(void *arg)
 {
