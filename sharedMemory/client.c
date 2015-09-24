@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 #define SHMSZ     27
-//this file is edited
+//this file is edited again
 main()
 {
     int shmid;
