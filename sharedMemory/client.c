@@ -6,7 +6,7 @@
 #include <sys/shm.h>
 #include <stdio.h>
 
-#define SHMSZ     27
+#define SHMSZ     28
 
 main()
 {
