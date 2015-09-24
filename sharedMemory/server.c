@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #define SHMSZ     27
+//Hello
 
 main()
 {
