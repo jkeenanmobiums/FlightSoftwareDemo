@@ -46,7 +46,9 @@ void * thread_func_1(void *arg)
 	    int i;
 	    for (i = 0; i < sizeof(arr); i++)
 	    {
-	    	*s++ = (char) arr[i];
+	    	char Char;
+	    	itoa(arr[i], Char);
+	    	*s++ = Char;
 	    }
 	    *s = NULL;
 		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
