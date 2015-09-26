@@ -43,7 +43,7 @@ void * thread_func_1(void *arg)
 	    s = shm;
 	    //write data
 	    char arr[20];
-	    sprintf(arr, Thread_1_Counter);
+	    sprintf(arr, "%d", Thread_1_Counter);
 	    int i;
 	    for (i = 0; i < sizeof(arr); i++)
 	    {
