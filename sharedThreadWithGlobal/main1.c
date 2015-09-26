@@ -42,8 +42,8 @@ void * thread_func_1(void *arg)
 		//Execute Code here
 	    s = shm;
 	    //write data
-	    char arr[sizeof(Thread_1_Counter)];
-	    itoa(Thread_1_Counter, arr, 10);
+	    char arr[(int)((ceil(log10(Thread_1_Counter))+1)*sizeof(char))];
+	    sprintf(arr, Thread_1_Counter);
 	    int i;
 	    for (i = 0; i < sizeof(arr); i++)
 	    {
