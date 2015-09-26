@@ -44,7 +44,6 @@ void * thread_func_1(void *arg)
 	    char arr[sizeof(Thread_1_Counter)];
 	    memcpy(&arr,&Thread_1_Counter,sizeof(Thread_1_Counter));
 	    int i;
-	    printf(arr);
 	    for (i = 0; i < sizeof(arr); i++)
 	    {
 	    	printf(arr[i]);
