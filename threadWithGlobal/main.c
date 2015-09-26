@@ -22,9 +22,9 @@ void * thread_func_1(void *arg)
 
 		clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t, NULL);
 
-		Thread_1_Counter++;
+		//Thread_1_Counter++;
 		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
-	}	
+	}
 }
 
 void * thread_func_2(void *arg)
