@@ -81,6 +81,7 @@ void * sharedMemoryInit()
     /*
      * Create the segment.
      */
+    printf("%d/n", SHMSZ);
     if ((shmid = shmget(key, SHMSZ, IPC_CREAT | 0666)) < 0) {
         perror("shmget");
         exit(1);
