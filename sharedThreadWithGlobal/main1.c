@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 //Shared Memory
 #include <sys/types.h>
@@ -42,13 +43,11 @@ void * thread_func_1(void *arg)
 	    s = shm;
 	    //write data
 	    char arr[sizeof(Thread_1_Counter)];
-	    memcpy(&arr,&Thread_1_Counter,sizeof(Thread_1_Counter));
+	    itoa(Thread_1_Counter, arr, 10);
 	    int i;
 	    for (i = 0; i < sizeof(arr); i++)
 	    {
-	    	char Char;
-	    	itoa(arr[i], Char);
-	    	*s++ = Char;
+	    	*s++ = arr[i];
 	    }
 	    *s = NULL;
 		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
