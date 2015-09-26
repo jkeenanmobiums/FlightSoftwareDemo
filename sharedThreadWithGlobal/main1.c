@@ -41,8 +41,11 @@ void * thread_func_1(void *arg)
 		//Execute Code here
 	    s = shm;
 	    //write data
-	    for (c = 'a'; c <= 'z'; c++)
-	        *s++ = c;
+	    char arr[sizeof(Thread_1_Counter)];
+	    memcpy(&arr,&Thread_1_Counter,sizeof(Thread_1_Counter));
+	    int i;
+	    for (i = 0; i < sizeof(arr); i++)
+	        *s++ = arr[i];
 	    *s = NULL;
 		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
 		//end execute Code here
