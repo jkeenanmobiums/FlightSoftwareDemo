@@ -42,7 +42,7 @@ void * thread_func_1(void *arg)
 		//Execute Code here
 	    s = shm;
 	    //write data
-	    char arr[(int)((ceil(log10(Thread_1_Counter))+1)*sizeof(char))];
+	    char arr[20];
 	    sprintf(arr, Thread_1_Counter);
 	    int i;
 	    for (i = 0; i < sizeof(arr); i++)
