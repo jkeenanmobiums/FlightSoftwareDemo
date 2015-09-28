@@ -8,12 +8,18 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-#define SHMSZ 27
+#define SHMSZ1 27
+#define SHMSZ2 27
 
 //global defined values
-int shmid;
-key_t key;
-char *shm, *s;
+//first variable
+int shmid1;
+key_t key1;
+char *shm1, *s1;
+//second variable
+int shmid2;
+key_t key2;
+char *shm2, *s2;
 
 //END Shared Memory
 
@@ -27,7 +33,7 @@ void * thread_func_1(void *arg)
 	clock_gettime(CLOCK_MONOTONIC, &t);
 	while(1)
 	{
-		t.tv_nsec += 500000000;
+		t.tv_nsec += 10000000;
 		if(t.tv_nsec >= 1000000000)
 		{
 			t.tv_sec += 1;
@@ -36,16 +42,17 @@ void * thread_func_1(void *arg)
 
 		clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t, NULL);
 
-		Thread_1_Counter++;
 		//Execute Code here
 	    //read data
 	    /*
 	     * Now read what the server put in the memory.
 	     */
-	    for (s = shm; *s != NULL; s++)
-	        putchar(*s);
+	    for (s1 = shm1; *s1 != NULL; s1++)
+	        putchar(*s1);
+	    putchar('\t');
+	    for (s2 = shm2; *s2 != NULL; s2++)
+	        putchar(*s2);
 	    putchar('\n');
-		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
 		//end execute Code here
 	}	
 }
@@ -64,8 +71,14 @@ void * thread_func_2(void *arg)
 		}
 
 		clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t, NULL);
-		Thread_2_Counter++;
-		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
+		
+
+		for (s1 = shm1; *s1 != NULL; s1++)
+	        putchar(*s1);
+	    putchar('\t');
+	    for (s2 = shm2; *s2 != NULL; s2++)
+	        putchar(*s2);
+	    putchar('\n');
 	}
 }
 
@@ -77,12 +90,12 @@ void * sharedMemoryInit()
      * We'll name our shared memory segment
      * "5678".
      */
-    key = 5678;
+    key1 = 5678;
 
     /*
      * Locate the segment.
      */
-    if ((shmid = shmget(key, SHMSZ, 0666)) < 0) {
+    if ((shmid1 = shmget(key1, SHMSZ1, 0666)) < 0) {
         perror("shmget");
         exit(1);
     }
@@ -90,10 +103,32 @@ void * sharedMemoryInit()
     /*
      * Now we attach the segment to our data space.
      */
-    if ((shm = shmat(shmid, NULL, 0)) == (char *) -1) {
+    if ((shm1 = shmat(shmid1, NULL, 0)) == (char *) -1) {
         perror("shmat");
         exit(1);
     }
+    /*
+     * We'll name our shared memory segment
+     * "5678".
+     */
+    key2 = 5679;
+
+    /*
+     * Locate the segment.
+     */
+    if ((shmid2 = shmget(key2, SHMSZ2, 0666)) < 0) {
+        perror("shmget");
+        exit(1);
+    }
+
+    /*
+     * Now we attach the segment to our data space.
+     */
+    if ((shm2 = shmat(shmid2, NULL, 0)) == (char *) -1) {
+        perror("shmat");
+        exit(1);
+    }
+    
 }
 
 int main()
