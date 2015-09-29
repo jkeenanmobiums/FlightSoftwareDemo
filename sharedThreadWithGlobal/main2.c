@@ -109,7 +109,7 @@ void * sharedMemoryInit()
     }
     /*
      * We'll name our shared memory segment
-     * "5678".
+     * "5679".
      */
     key2 = 5679;
 
@@ -128,7 +128,7 @@ void * sharedMemoryInit()
         perror("shmat");
         exit(1);
     }
-    
+    return 0;
 }
 
 int main()

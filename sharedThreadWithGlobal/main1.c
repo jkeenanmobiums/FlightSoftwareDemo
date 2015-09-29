@@ -60,7 +60,7 @@ void * thread_func_1(void *arg)
 	    }
 	    *s1 = NULL;
 		printf("Thread 1: %d\t Thread 2: %d\n", Thread_1_Counter, Thread_2_Counter);
-		printf("ThermoCouples Reading.")
+		printf("ThermoCouples Reading.");
 		//end execute Code here
 	}	
 }
@@ -73,7 +73,7 @@ void * thread_func_2(void *arg)
 	while(1)
 	{
 		//10hz
-		t.tv_nsec += 100000000;
+		t.tv_nsec += 500000000;
 		if(t.tv_nsec >= 1000000000)
 		{
 			t.tv_sec += 1;
@@ -167,7 +167,7 @@ void * sharedMemoryInit()
 
     /*
      * We'll name our shared memory segment
-     * "5678".
+     * "5679".
      */
     key2 = 5679;
 
@@ -183,8 +183,7 @@ void * sharedMemoryInit()
         perror("shmat");
         exit(1);
     }
-
-    
+    return 0;
 }
 
 int main()
