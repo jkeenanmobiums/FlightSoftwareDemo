@@ -1,0 +1,29 @@
+INTERPROCESS COMMUNICATIN EXAMPLE
+Jeremy Lim
+Sept. 29, 2015.
+
+The code should work with Linux.
+It should also work with MAC OS X (with some work)
+
+Windows? Hell no.
+
+Here's an example of a basic C++ class that makes IPC using shared memory abstract.
+This project will create 2 executables; one publishing to the memory, the other strictly reading from it.
+Here's a list of what is demonstrated:
+
+-CTopicPortal is a class that allows the use of any type in creating a shared memory segment
+-Allocation/Deallocation of the memory is taken care of, as long as the class's destructors
+  are called.
+-Semaphores are implemented to avoid concurrency and race conditions (maybe ?)
+-Basic reading/writing of a single element is implemented.
+
+This is far from complete, however. There are some glaring problems:
+-CTopicPortal only has a .h file. This is because the compiler & linker aren't smart enough to compile the templated class unless it's
+  all in one file.
+-Semaphores are implemented, but it is difficult to determine whether they are actually working properly, or
+  if they're cleaned up on exit.
+-Error checking in many of the functions is missing and incomplete.
+-Only reading/writing of single elements are supported for now.
+-Memory cleanup only happens if the program shuts down gracefully; otherwise it sticks around.
+-Every process using a specific segment must know the size, Semaphore names and ID number. This is not portable.
+-No implementation of a log file(yet).
