@@ -54,6 +54,10 @@ public:
     int writeTopic(T *inMsg, int index);
     //nice function will prevent out-of bounds access.
     int readTopic(T *outMsg, int index);
+    //functions that allow for reading/writing of multiple values at once.
+    int readRangeOfTopic(T *outArray, int startIn, int endIn);
+    //multiple write
+    int writeRangeOfTopic(T *inArray, int arrSize, int index);
     
 private:
     std::string m_intTopicPath;
@@ -251,5 +255,53 @@ int CTopicPortal<T>::readTopic(T *outMsg, int index)
     return 0;
 }
 
+//Read multiple elements of type T into an array of type T
+//better than doing stuff one-at-a-time in some cases.
+//make sure the output array is big enough!
+template <typename T>
+int CTopicPortal<T>::readRangeOfTopic(T *outArray, int startIn, int endIn)
+{
+    //seize semaphore
+    sem_wait(m_semaphore);
+    int q = sizeof(T);
+    int elementNum = (endIn-startIn)+1;
+    //might work...
+    if( startIn < 0 || endIn >= m_messagesSize || startIn > endIn)
+    {
+        printf("out of bounds. error.");
+    }
+    else
+    {
+        memcpy(outArray, (((T *)m_fd) + startIn), q*elementNum);
+    }
+    //release semaphore
+    sem_post(m_semaphore);
+    
+    return 0;
+}
+
+//Write values to multiple positions in memory
+//more efficient than doing it one-at-a-time.
+template <typename T>
+int CTopicPortal<T>::writeRangeOfTopic(T *inArray, int arrSize, int index)
+{
+    //seize semaphore
+    sem_wait(m_semaphore);
+    int q = sizeof(T);
+    //might work...
+    if( arrSize < 1)
+    {
+        printf("Too small. Error.");
+        return -1;
+    }
+    else
+    {
+        memcpy((((T *)m_fd) + index), inArray, q*arrSize);
+    }
+    //release semaphore
+    sem_post(m_semaphore);
+    
+    return 0;
+}
 #endif	/* CTOPICPORTAL_H */
 
